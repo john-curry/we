@@ -4,6 +4,7 @@ var properties = {
   loadable: true,
   visible: true,
   collidable: true,
-  color: "black"
+  color: "black",
+  priority: 1
 };
 

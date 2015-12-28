@@ -1,32 +1,22 @@
-function Fucus() { }
 
-Fucus.prototype = {
-  properties: { 
-    collidable: false,
-    visible: true,
-    updatable: true,
-    drawable: true,
-    loabable: true
-  },
+Fucus.prototype = Object.create(properties);
 
-  velocity: new point(0, 0),
-  acceleration: new point(0, 0),
-  max_speed: 4,
-  box: new rectangle(0, 0, 75, 150),
+
+function Fucus() { 
+  this.velocity = new point(0, 0);
+  this.acceleration = new point(0, 0);
+  this.max_speed = 4;
+  this.box = new rectangle(0, 0, 75, 150);
   
-  
-  load: function(game) {
-  },
+  this.load = function(game) {
+  }
 
-  draw: function(g) {
+  this.draw = function(g) {
     var box = this.box;
     box.draw(g);
-  },
+  }
 
-  collide: function(r) {
-  },
-
-  update: function(timestamp, game) {
+  this.update = function(timestamp, game) {
     var box = this.box;
     var v = this.velocity;
     var a = this.acceleration;
@@ -57,7 +47,7 @@ Fucus.prototype = {
       }
     }
 
-    if (collided_with.length  == 0) { // if there is no collisions, add gravity to acceleration
+    if (collided_with.length  == 0) { 
       a.y = game.gravity.y;
     } else { a.y = 0; v.y = 0; }
 
@@ -73,7 +63,5 @@ Fucus.prototype = {
     if (Math.abs(v.y) <= 1) { v.y = 0; }
     //if (Math.abs(a.x) <= 1) { a.x = 0; }
     //if (Math.abs(a.y) <= 1) { a.y = 0; }
-
-
-  },
-};
+  }
+}
