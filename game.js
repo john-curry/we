@@ -1,7 +1,9 @@
-var game = {
+var easymode = {
   x: 0, y: 0, w: 800, h: 600,
+  gravity: new point(0, 1),
   components: [ ],
-
+  DEBUG: true,
+  keysdown: [ ],
   load: function() {
     for (var i = 0; i < this.components.length; i++) {
       if (this.components[i].properties.loadable) {
@@ -26,7 +28,7 @@ var game = {
       }
     }
   },
-  
+
   collidables: function() {
     return this.components.filter(function(i) { return i.properties.collidable; });
   },
@@ -36,3 +38,5 @@ var game = {
   }
 };
 
+var Game = function() { };
+Game.prototype = easymode;

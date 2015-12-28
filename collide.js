@@ -1,12 +1,10 @@
-var calls = 0;
-function collision(r, b) {
-    calls++; 
-    if (b === r) return false;
-    var ic = !(r.X() > b.X() + b.H() ||
-             r.X() + r.W() < b.X() || 
-             r.Y() > b.Y() + b.H() || 
-             r.Y() + r.H() < b.Y()
-             );
-    if  (ic == true) alert("COLLISION");
+function collision(r1, r2) {
+    if (r2 === r1) return false;
+
+    var ic = !( r1.X() > r2.X() + r2.H() ||
+                r1.Y() > r2.Y() + r2.H() || 
+                r1.X() + r1.W() < r2.X() || 
+                r1.Y() + r1.H() < r2.Y()
+              );
     return ic;
 }

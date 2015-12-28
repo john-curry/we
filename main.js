@@ -9,6 +9,7 @@ var camera = new point(0,0);
 camera.width = 800;
 camera.height = 600;
 
+var game = new Game();
 var landscape = new Landscape();
 var f = new Fucus();
 game.addComponent(landscape);
@@ -30,8 +31,16 @@ var onFrame = function(timestamp) {
   window.requestAnimationFrame(onFrame);
 }
 
-document.onkeypress = function(e) {
-};
+document.addEventListener("keydown", function(event) {
+  //if (event.defaultPrevent) return;
+  var left = "left";
+  var right = "right";
+  var up = "up";
+  var down = "down";
+  game.keysdown.push(event.key);  
+
+  event.preventDefault();
+});
 
 document.onmousemove = function(arg) {
   corner.x = arg.clientX;
