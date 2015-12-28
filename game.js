@@ -1,4 +1,6 @@
-var easymode = {
+var Game = function() { };
+
+Game.prototype = {
   x: 0, y: 0, w: 800, h: 600,
   gravity: new point(0, 1),
   components: [ ],
@@ -23,7 +25,8 @@ var easymode = {
   draw: function(g) {
     g.clearRect(0, 0, 800, 600);
     for (var i = 0; i < this.components.length; i++) {
-      if (this.components[i].properties.drawable) {
+      var c = this.components[i];
+      if (c.properties.drawable && c.properties.visible) {
         this.components[i].draw(g);
       }
     }
@@ -33,10 +36,11 @@ var easymode = {
     return this.components.filter(function(i) { return i.properties.collidable; });
   },
 
+  addComponents: function(c) {
+    this.components = this.components.concat(c);
+  },
+  
   addComponent: function(c) { 
     this.components.push(c);  
   }
 };
-
-var Game = function() { };
-Game.prototype = easymode;

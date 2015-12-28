@@ -3,6 +3,7 @@ var properties = {
   drawable: true,
   loadable: true,
   visible: true,
-  collidable: true
+  collidable: true,
+  color: "black"
 };
 

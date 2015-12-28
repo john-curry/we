@@ -1,9 +1,14 @@
 function Landscape() {
-  
+  var rectangles = [ ];  
+
   this.load = function(game) { 
+    var blue = true;
     for (var i = 0; i < game.w; i++) {
-      game.addComponent(new rectangle(i, game.h / 2, 10, 2 * game.h));
+      var r = new rectangle(i * 25, game.h / 2, 25, 2 * game.h);
+      r.visible = false;
+      rectangles.push(r);
     }
+    game.addComponents(rectangles);
   };
 
   this.draw = function(g) {

@@ -50,10 +50,10 @@ Fucus.prototype = {
 
     if (game.keysdown.length == 0) {
       if (v.x > 0) {
-        a.x = -.1;
+        a.x = -.5;
       }
       if (v.x < 0) {
-        a.x = .1;
+        a.x = .5;
       }
     }
 
