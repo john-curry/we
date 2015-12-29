@@ -6,6 +6,7 @@ function Landscape() {
     for (var i = 0; i < game.w; i++) {
       var r = new rectangle(i * 25, game.h / 2, 25, 2 * game.h);
       var r2 = new rectangle(i * 60, 0, 30, game.h / 2);
+      r2.color = "Orange";
       r2.collidable = false;
       if (i % 2 == 0) r.color = "Blue";
       else            r.color = "Green";

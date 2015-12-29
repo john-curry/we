@@ -1,13 +1,11 @@
 
-Fucus.prototype = Object.create(properties);
-
-
 function Fucus() { 
   this.velocity = new point(0, 0);
   this.acceleration = new point(0, 0);
   this.max_speed = 4;
   this.box = new rectangle(0, 0, 75, 150);
-  
+  this.collidable = false;
+    
   this.load = function(game) {
   }
 
@@ -30,20 +28,20 @@ function Fucus() {
 
     if (game.keysdown.some((i) => i == "ArrowLeft")) { 
       game.keysdown = game.keysdown.filter(i => i != "ArrowLeft");
-      a.x -= .5;
+      a.x = -1;
     }
 
     if (game.keysdown.some((i) => i == "ArrowRight")) { 
       game.keysdown = game.keysdown.filter(i => i != "ArrowRight");
-      a.x += .5;
+      a.x = 1;
     }
 
-    if (game.keysdown.length == 0) {
+    if (game.keysdown.every(i => i != "ArrowRight" || i != "ArrowLeft")) {
       if (v.x > 0) {
-        a.x = -.5;
+        a.x = -.1;
       }
       if (v.x < 0) {
-        a.x = .5;
+        a.x = .1;
       }
     }
 
@@ -61,7 +59,8 @@ function Fucus() {
 
     if (Math.abs(v.x) <= 1) { v.x = 0; }
     if (Math.abs(v.y) <= 1) { v.y = 0; }
-    //if (Math.abs(a.x) <= 1) { a.x = 0; }
-    //if (Math.abs(a.y) <= 1) { a.y = 0; }
+    if (Math.abs(a.x) <= .5) { a.x = 0; }
+    if (Math.abs(a.y) <= .1) { a.y = 0; }
   }
 }
+Fucus.prototype = Object.create(properties);

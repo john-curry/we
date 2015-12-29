@@ -12,8 +12,8 @@ camera.height = 600;
 var game = new Game();
 var landscape = new Landscape();
 var f = new Fucus();
-game.addComponent(landscape);
-game.addComponent(f);
+
+game.addComponents([ landscape, f ]);
 
 var debug = {
   text: "No Error",
@@ -22,6 +22,7 @@ var debug = {
 
 window.onload = function() {
   game.load();
+  game.components.sort((x, y) => x.priority < y.priority);
   window.requestAnimationFrame(onFrame);
 }
 
