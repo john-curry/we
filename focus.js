@@ -25,7 +25,9 @@ function Fucus() {
 
     var collided_with = game.collidables().filter(
       function(e) {
-        return e.collide(box) != false;
+        var d = e.collide(box);
+        if (d.top || d.bottom || d.right || d.left) return true;
+        return false;
       }
     );
 
