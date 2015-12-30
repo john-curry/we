@@ -7,7 +7,7 @@ function collision(r2) {
     if (this.X() + this.W() < r2.X()) d.left = false;
     if (this.Y() + this.H() < r2.Y()) d.top  = false;
 
-    if (!d.has_direction()) return false;    
+    if (d.has_direction()) return false;    
     return d;
 }
 
