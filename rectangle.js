@@ -23,7 +23,9 @@ rectangle.prototype.H = function() {
     return this.h; 
 }
 
+rectangle.prototype.collide = collision;
+
 rectangle.prototype.draw = function(g) { 
     g.fillStyle = this.color;
-    g.fillRect(this.x, this.y, this.w, this.h); 
+    g.fillRect(this.x - (this.w / 2), this.y - (this.h / 2), this.w, this.h); 
 }

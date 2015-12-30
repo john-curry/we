@@ -3,7 +3,7 @@ var Game = function() { };
 Game.prototype = {
   DEBUG: true,
   x: 0, y: 0, w: 800, h: 600,
-  gravity: new point(0, 1),
+  gravity: new point(0, .3),
   components: [ ],
   keysdown: [ ],
   load: function() {
