@@ -35,12 +35,12 @@ function Fucus() {
 
     if (game.keysdown.some((i) => i == "ArrowLeft")) { 
       game.keysdown = game.keysdown.filter(i => i != "ArrowLeft");
-      a.x -= 1;
+      a.x = -3;
     }
 
     if (game.keysdown.some((i) => i == "ArrowRight")) { 
       game.keysdown = game.keysdown.filter(i => i != "ArrowRight");
-      a.x += 1;
+      a.x = 3;
     }
 
     if (game.keysdown.some((i) => i == "ArrowUp")) { 
@@ -58,6 +58,11 @@ function Fucus() {
     if (Math.abs(v.x) < 1) {
       v.x = 0;
       a.x = 0;
+    }
+
+    if (Math.abs(v.y) >= ms) {
+      a.y = 0;
+      v.y = Math.sign(v.y) * ms;
     }
 
     if (Math.abs(v.x) >= ms) {

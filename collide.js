@@ -4,12 +4,11 @@ function collision(r1, r2) {
       else r2 = this;
     }
     if (r2 === r1) return false;
-    r2 = new rectangle(r2.X() - (r2.W() / 2), r2.Y() - (r2.H() / 2), r2.W(), r2.H())
-    r2 = new rectangle(r1.X() - (r1.W() / 2), r1.Y() - (r1.H() / 2), r1.W(), r1.H())
-    var ic = !( r1.X() > r2.X() + r2.H() ||
-                r1.Y() > r2.Y() + r2.H() || 
+
+    var ic = !( r1.X() > r2.X() + r2.W() ||
+                r1.Y() > r2.Y() + r2.H() || // check number 2
                 r1.X() + r1.W() < r2.X() || 
-                r1.Y() + r1.H() < r2.Y()
+                r1.Y() + r1.H() < r2.Y()    // check number 1
               );
      
     // describes which direction r1 hits r2
@@ -26,7 +25,7 @@ function collision(r1, r2) {
       if (r1.X() + r1.W() > r2.X()) direction.right = true;
 
       // check if the left of r1 is to the left of the right of r2
-      if (r1.X() < r2.X() + r2.H()) direction.left = true;
+      if (r1.X() < r2.X() + r2.W()) direction.left = true;
     }
     return direction;
 }

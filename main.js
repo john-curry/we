@@ -12,8 +12,10 @@ camera.height = 600;
 var game = new Game();
 var landscape = new Landscape();
 var f = new Fucus();
-
-game.addComponents([ landscape, f ]);
+var block = new rectangle(game.w / 2, game.h/4, 40, game.h / 2);
+block.priority = 1;
+block.collidable = true;
+game.addComponents([ landscape, f , block]);
 
 var debug = {
   text: "No Error",

@@ -4,8 +4,8 @@ function Landscape() {
   this.load = function(game) { 
     var blue = true;
     for (var i = 0; i < game.w; i++) {
-      var r = new rectangle(i * 25, game.h, 25, game.h / 2);
-      var r2 = new rectangle(i * 60, game.h* (3.0/4.0), 30, game.h / 2);
+      var r = new rectangle(i * 25, game.h / 2, 25, game.h / 2);
+      var r2 = new rectangle(i * 60, 0, 30, game.h / 2);
       r2.color = "Orange";
       r2.collidable = false;
       if (i % 2 == 0) r.color = "Blue";
