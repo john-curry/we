@@ -31,7 +31,14 @@ function Fucus() {
       }
     );
 
-    //var collision_information = collided_with.map(i => i.collide(this));
+    // need to find the rectangle that i am currently on
+    // search collidables and find something i am on top of
+    // set my position accordingly
+    var c = game.collidables();
+    var min = game.h;
+    for (var i = 0; i < c.length; i++) {
+      if (c[i].Y() < min && box.collide(c[i]).top) min = c[i].Y();
+    }
 
     if (game.keysdown.some((i) => i == "ArrowLeft")) { 
       game.keysdown = game.keysdown.filter(i => i != "ArrowLeft");
@@ -76,10 +83,15 @@ function Fucus() {
 
     box.x += v.x;
     box.y += v.y;
-
+     
+    
     if (collided_with.length  == 0) { 
       a.y = game.gravity.y;
-    } else { a.y = 0; v.y = 0; }
+    } else { 
+      a.y = 0; 
+      v.y = 0; 
+      box.y = min - box.h;
+    }
   }
 }
 Fucus.prototype = Object.create(properties);

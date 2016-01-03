@@ -3,6 +3,10 @@ var Game = function() { };
 Game.prototype = {
   DEBUG: true,
   x: 0, y: 0, w: 800, h: 600,
+  X: function() { return x; },
+  Y: function() { return y; },
+  W: function() { return w; },
+  H: function() { return h; },
   gravity: new point(0, .3),
   components: [ ],
   keysdown: [ ],

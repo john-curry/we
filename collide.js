@@ -12,7 +12,12 @@ function collision(r1, r2) {
               );
      
     // describes which direction r1 hits r2
-    var direction = { top:false, bottom:false, right:false, left:false };
+    var direction = { 
+      top:false, 
+      bottom:false, 
+      right:false, 
+      left:false 
+    };
 
     if (ic) {
       // check if bottom of r1 is below the top of r2
