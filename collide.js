@@ -18,19 +18,32 @@ function collision(r1, r2) {
       right:false, 
       left:false 
     };
-
+    // TODO: collision on right and left is still messed up
     if (ic) {
-      // check if bottom of r1 is below the top of r2
-      if (r1.Y() + r1.H() > r2.Y()) direction.top = true;
-
-      //  "    "  top    of r2    above the bottom of r2
-      if (r1.Y() < r2.Y() + r2.H()) direction.bottom = true;
-
-      // check if the right of r1 is to the right of the left of r2
-      if (r1.X() + r1.W() > r2.X()) direction.right = true;
-
+      if (/*r1.X() < (r2.X() + r2.W()) &&*/ (r1.X() + r1.W() > r2.X + r2.W())) {
+        direction.right = true;
+      }
       // check if the left of r1 is to the left of the right of r2
-      if (r1.X() < r2.X() + r2.W()) direction.left = true;
+      if (r1.X() + r1.W() > r2.X() && r1.X() < r2.X()){
+        direction.left = true;
+      }
+      // check if bottom of r1 is below the top of r2
+      if (r1.Y() + r1.H() > r2.Y()) {
+        direction.top = true;
+      }
+      //  "    "  top    of r2    above the bottom of r2
+      if (r1.Y() < r2.Y() + r2.H()) {
+        direction.bottom = true;
+      }
+      // check if the right of r1 is to the right of the left of r2
+      if (direction.right && direction.left) {
+        direction.right = false;
+        direction.left  = false;
+      }
+      if (direction.top && direction.bottom) {
+        direction.right = false;
+        direction.left  = false;
+      }
     }
     return direction;
 }

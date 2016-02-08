@@ -2,12 +2,12 @@ var Game = function() { };
 
 Game.prototype = {
   DEBUG: true,
-  x: 0, y: 0, w: 800, h: 600,
+  x: 0, y: 0, w: 1900, h: 1000,
   X: function() { return x; },
   Y: function() { return y; },
   W: function() { return w; },
   H: function() { return h; },
-  gravity: new point(0, .3),
+  gravity: new point(0, 2),
   components: [ ],
   keysdown: [ ],
   load: function() {
@@ -24,10 +24,11 @@ Game.prototype = {
         this.components[i].update(timestamp, game);
       }
     }
+    this.keysdown = [ ];
   },
 
   draw: function(g) {
-    g.clearRect(0, 0, 800, 600);
+    g.clearRect(0, 0, this.w, this.h);
     for (var i = 0; i < this.components.length; i++) {
       var c = this.components[i];
       if (c.drawable && c.visible) {
