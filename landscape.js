@@ -1,19 +1,32 @@
 function Landscape() {
   var rectangles = [ ];  
+  this.loaded = false;
+  this.loadable = true;
 
   this.load = function(game) { 
     var blue = true;
+    var num = 10;
     for (var i = 0; i < game.w; i++) {
-      var r = new rectangle(i * 25, game.h - 200, 25, game.h - 20);
-      var r2 = new rectangle(i * 60, 0, 30, game.h / 2);
-      r2.color = "Orange";
-      r2.collidable = false;
-      if (i % 2 == 0) r.color = "Blue";
-      else            r.color = "Green";
-      rectangles.push(r2);
-      rectangles.push(r);
+      if (i % 50 == 0) {
+        game.addComponent(
+          new rectangle(i, 0, 2, game.h)
+        );
+        game.addComponent(
+          new rectangle(0, i, game.w, 2)
+        );
+      }
     }
-    game.addComponents(rectangles);
+     
+    for (var i = 0; i < num; i++) {
+     game.addComponents(
+      new ball(
+        500*Math.random(),  
+        new point(game.w*Math.random(), game.h*Math.random()),
+        new point(0, 0),
+        "black"
+        )
+      );
+    }
   };
 
   this.draw = function(g) {

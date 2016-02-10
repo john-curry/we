@@ -7,13 +7,14 @@ Game.prototype = {
   Y: function() { return y; },
   W: function() { return w; },
   H: function() { return h; },
-  gravity: new point(0, 2),
   components: [ ],
   keysdown: [ ],
   load: function() {
     for (var i = 0; i < this.components.length; i++) {
-      if (this.components[i].loadable) {
-        this.components[i].load(game);
+      var comp = this.components[i];
+      if (comp.loadable && !comp.loaded) {
+        comp.load(game);
+        comp.loaded = true;
       }
     }
   },
@@ -46,6 +47,7 @@ Game.prototype = {
   },
   
   addComponent: function(c) { 
+    if (!c.loaded && c.loadable) c.load(game);
     this.components.push(c);  
   }
 };

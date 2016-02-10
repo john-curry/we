@@ -5,6 +5,7 @@ function rectangle(x, y, w, h) {
   this.loadable = false;
   this.collidable = true;
   this.priority = 2;
+  this.color = "black";
 }
 
 rectangle.prototype = Object.create(new point(0, 0));
@@ -24,6 +25,14 @@ rectangle.prototype.H = function() {
 }
 
 rectangle.prototype.collide = collision;
+
+rectangle.prototype.toPoint = function() {
+  return new point(this.x, this.y);
+}
+
+rectangle.prototype.dimensions = function() {
+  return new point(this.w, this.h);
+}
 
 rectangle.prototype.draw = function(g) { 
     g.fillStyle = this.color;

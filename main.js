@@ -4,14 +4,12 @@ canvas.height = game.h;
 canvas.width  = game.w;
 var graphics = canvas.getContext("2d");
 var out =    document.getElementById("debug");
-var ball = new Ball(50, new point(100, 100), new point(5, 1), "black");
+
 var landscape = new Landscape();
 var f = new Fucus();
-var block = new rectangle(game.w / 2, game.h/4, 400, game.h / 2);
-block.color = "red";
-block.priority = 1;
-block.collidable = true;
-game.addComponents([ landscape, f , block , ball]);
+var r = new rocket(new point(100, 100), 1, 200);
+
+game.addComponents([ landscape, f , r ]);
 
 var debug = {
   text: "No Error",
@@ -38,7 +36,7 @@ var onFrame = function(timestamp) {
 }
 
 document.addEventListener("keydown", function(event) {
-  if (event.defaultPrevented) return;
+  //if (event.defaultPrevented) return;
   game.keysdown.push(event.key);  
   event.preventDefault();
 });
