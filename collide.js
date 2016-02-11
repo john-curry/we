@@ -1,3 +1,36 @@
+/* =================================================
+    Contract: every 'offensive' object will check 
+    for collisions on its own and call a collidables
+    onCollision method
+ =================================================
+ */
+function collision_circ_rect(circ, rect, rot) {
+  // translate everything to the origin
+  var center = new point(
+    circ.position.x - rect.x - rect.w/2, 
+    circ.position.y - rect.y - rect.h/2
+  );
+  var rect_trans = new point(
+    (-rect.w/2),
+    (-rect.h/2)
+  );
+  //console.log("Circle center " + center + " with radius" + circ.radius + " intersecting " + rect);
+  
+  // rotate circle in opposite direction
+  var center_rot = new point(
+    center.x*Math.cos(-rot*Math.PI/180) - center.y*Math.sin(-rot*Math.PI/180),
+    center.y*Math.sin(-rot*Math.PI/180) + center.y*Math.cos(-rot*Math.PI/180)
+  );
+  if (center_rot.x - circ.radius > rect_trans.x + rect.w ||
+      center_rot.y - circ.radius > rect_trans.y + rect.h ||
+      center_rot.x + circ.radius < rect_trans.x - rect.w ||
+      center_rot.y + circ.radius < rect_trans.y - rect.h) 
+   { return false; }
+   
+   return true;
+}
+
+
 function collision(r1, r2) {
     if (r2 == undefined) {
       if (r1.X == undefined) throw "collision requires a rectangle to work";

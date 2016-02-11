@@ -32,5 +32,7 @@ point.prototype.norm = function() {
     this.y/this.length
   );
 }
-
+point.prototype.toString = function() {
+  return "("+this.x+","+this.y+")";
+}
 var origin = new point(0, 0);

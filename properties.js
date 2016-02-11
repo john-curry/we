@@ -6,6 +6,12 @@ var properties = {
   visible: true,
   collidable: true,
   color: "black",
-  priority: 1
+  priority: 1,
+  collide: function(e) {
+    return false;
+  },
+  onCollision: function(e) {
+    //console.log("colliding with a non-collision implemented object");
+  }
 };
 

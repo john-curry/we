@@ -16,11 +16,11 @@ function Landscape() {
         );
       }
     }
-     
+    //game.addComponent(new ball(200,new point(800,400))); 
     for (var i = 0; i < num; i++) {
      game.addComponents(
       new ball(
-        500*Math.random(),  
+        250*Math.random(),  
         new point(game.w*Math.random(), game.h*Math.random()),
         new point(0, 0),
         "black"

@@ -38,3 +38,6 @@ rectangle.prototype.draw = function(g) {
     g.fillStyle = this.color;
     g.fillRect(this.x, this.y, this.w, this.h); 
 }
+rectangle.prototype.toString = function() {
+  return "Rectangle w,h" + this.dimensions() + " @ " + this.toPoint();
+}

@@ -18,6 +18,9 @@ var debug = {
 
 var out = document.getElementById("debug");
 
+var b = new ball(10, new point(100, 100));
+var r = new rectangle(0, 0, 10, 10);
+
 window.onload = function() {
   game.load();
   game.components.sort((x, y) => x.priority < y.priority);
