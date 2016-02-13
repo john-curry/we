@@ -8,18 +8,44 @@ var out =    document.getElementById("debug");
 var landscape = new Landscape();
 var f = new Fucus();
 var r = new rocket(new point(100, 100), 1, 200);
+var e = new Enemy();
 
+game.player = f;
 game.addComponents([ landscape, f , r ]);
+game.addComponent(e);
 
-var debug = {
-  text: "No Error",
-  number: null,
-}
+var lines = [ ];
 
-var out = document.getElementById("debug");
+var r = new rectangle(400, 400, 200, 200);
+lines.push( new Line(1, 0, new point(0, 500)));
+lines.push( new Line(1, 0, new point(1000, 500)));
+lines.push( new Line(1, 0, new point(0, 500)));
 
-var b = new ball(10, new point(100, 100));
-var r = new rectangle(0, 0, 10, 10);
+lines.push( new Line(1000, 180, new point(500, 500)));
+
+game.addComponents(lines);
+game.addComponent(r);
+
+lines.forEach(i => console.log("Intersect rectangle: " + r + " with line " + i + ": " + collision_line_rect(i, r, 0)));
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 window.onload = function() {
   game.load();

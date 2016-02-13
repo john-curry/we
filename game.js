@@ -1,5 +1,11 @@
 var Game = function() { };
+/* alg: turn based system
+  every player character gets a timer which dictates its turn
+  every time the player makes an action, the timer is depleted
+  when the timer is depleted, their turn is over
+  then the next player startes their turn
 
+*/
 Game.prototype = {
   DEBUG: true,
   x: 0, y: 0, w: 1900, h: 1000,
@@ -43,11 +49,18 @@ Game.prototype = {
   },
 
   addComponents: function(c) {
+    //c.forEach(i => i.load(this));
     this.components = this.components.concat(c);
   },
   
   addComponent: function(c) { 
     if (!c.loaded && c.loadable) c.load(game);
     this.components.push(c);  
-  }
+  },
+  change_state: function(s) {
+    this.state = s;
+    this.update = this[s];
+  },
+  player_wins: function(time, game) { },
+  player_loses: function(time, game) { }
 };

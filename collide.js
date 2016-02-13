@@ -4,24 +4,81 @@
     onCollision method
  =================================================
  */
+
+
+function collision_line_rect(line, rect, rot) {
+   var v1 = rect.toPoint().sub(line.position); 
+   var v2 = rect.toPoint().add(rect.dimensions()).sub(line.position);
+
+   //console.log("Point1: " + v1 + " point2: " + v2);
+   var angle1 = toDeg(Math.atan(v1.y/v1.x));
+   var angle2 = toDeg(Math.atan(v2.y/v2.x));
+   
+   // check which quadrant we are in
+   if (v1.x < 0 && v1.y > 0) {
+     angle1 = 180 - angle1;
+   }
+   if (v1.x < 0 && v1.y < 0) {
+     angle1 += 180;
+   }
+   if (v1.x > 0 && v1.y < 0) {
+     angle1 = 360 - angle1;
+   }
+
+   if (v2.x < 0 && v2.y > 0) {
+     angle2 = 180 - angle2;
+   }
+   if (v2.x < 0 && v2.y < 0) {
+     angle2 += 180;
+   }
+   if (v2.x > 0 && v2.y < 0) {
+     angle2 = 360 - angle2;
+   }
+
+   
+   
+   
+    
+   var line_rad = line.theta*Math.PI/180;
+   
+   //console.log("Angle1: " + (angle1) + " Angle2: " + (angle2) + "theta: " + line.theta);
+   if (angle1 < angle2) {
+     if (line.theta > (angle1) && line.theta < (angle2)) {
+       return true;
+     }
+     return false;
+   } else {
+     if (line.theta > angle2 && line.theta < angle1) {
+       return true;
+     }
+     return false;
+   }
+   return false;
+}
+
+function rot_point(p, rot) {
+  return new point(
+    p.x*Math.cos(rot*Math.PI/180) - p.y*Math.sin(rot*Math.PI/180),
+    p.y*Math.sin(rot*Math.PI/180) + p.y*Math.cos(rot*Math.PI/180)
+  );
+}
+  
 function collision_circ_rect(circ, rect, rot) {
   // translate everything to the origin
   var center = new point(
     circ.position.x - rect.x - rect.w/2, 
     circ.position.y - rect.y - rect.h/2
   );
+  // translate the rectangle to its center point
   var rect_trans = new point(
     (-rect.w/2),
     (-rect.h/2)
   );
-  //console.log("Circle center " + center + " with radius" + circ.radius + " intersecting " + rect);
   
   // rotate circle in opposite direction
-  var center_rot = new point(
-    center.x*Math.cos(-rot*Math.PI/180) - center.y*Math.sin(-rot*Math.PI/180),
-    center.y*Math.sin(-rot*Math.PI/180) + center.y*Math.cos(-rot*Math.PI/180)
-  );
-  if (center_rot.x - circ.radius > rect_trans.x + rect.w ||
+  var center_rot = rot_point(center, -rot);
+
+   if (center_rot.x - circ.radius > rect_trans.x + rect.w ||
       center_rot.y - circ.radius > rect_trans.y + rect.h ||
       center_rot.x + circ.radius < rect_trans.x - rect.w ||
       center_rot.y + circ.radius < rect_trans.y - rect.h) 

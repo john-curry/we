@@ -4,18 +4,22 @@ function Fucus() {
   this.acceleration = new point(0, 0);
   this.mag_dir = new point(0, 90);
   this.box = new rectangle(200, 400, 75, 150);
-  this.fire_timer = new timer(500);
-    
+  this.fire_timer = undefined;
+  this.fire_rate = 1000; // ms    
   this.image = undefined;
   this.box.color = "blue";
-  this.collidable = false;
+  this.collidable = true;
   this.state = "moving";    
 
   this.max_speed = 5;
   this.thrust = 1.2;
   this.anti_thrust = -.1;
-  this.delta_theta = 4;
-  this.tol = .2; // tolerance
+  this.delta_theta = 4; this.tol = .2; // tolerance
+
+  this.theta = function(t) { 
+    if (t == undefined) return this.mag_dir.y; 
+    else { this.mag_dir = t; }
+  }
 
   this.X = function()
   { return this.box.x; }
@@ -29,6 +33,13 @@ function Fucus() {
   this.load = function(game) {
     this.image = document.getElementById("spaceship");
     this.change_state("moving");
+    this.uuid = make_uuid();
+  }
+
+  this.onCollision = function(game, collided_with) {
+    if (collided_with instanceof rocket && rocket.owner != this.uuid) {
+      game.change_state("player_loses");
+    }
   }
 
   this.draw = function(g) {
@@ -46,7 +57,7 @@ function Fucus() {
     this.update = this[this.state];
   };
 
-  this.collide = collision;
+  this.collide = function(e) { }
 
   this.update = this[this.state];
 
@@ -58,6 +69,13 @@ function Fucus() {
 
     if (game.keysdown.some(i => i == "ArrowUp")) {
       md.x = this.thrust; 
+    }
+    else if (game.keysdown.some(i => i == "ArrowLeft")) {
+      md.y -= this.delta_theta;
+    }
+
+    else if (game.keysdown.some(i => i == "ArrowRight")) {
+      md.y += this.delta_theta;
     } else {
       md.x = this.anti_thrust;
     }
@@ -65,13 +83,6 @@ function Fucus() {
     if (game.keysdown.some(i => i == "ArrowDown")) {
     }
 
-    if (game.keysdown.some(i => i == "ArrowLeft")) {
-      md.y -= this.delta_theta;
-    }
-
-    if (game.keysdown.some(i => i == "ArrowRight")) {
-      md.y += this.delta_theta;
-    }
 
     if (game.keysdown.some(i => i == "Enter")) {
       this.fireRocket(game);
@@ -95,15 +106,23 @@ function Fucus() {
     box.x += v.x;
     box.y += v.y;
   };
+  this.ready = true;
 
   this.fireRocket = function(game) {
+    var ft = this.fire_timer;
+    if (this.ready) {
+      this.ready = false;
+      ft = new timer(this.fire_rate, () => this.ready = true);
+      ft.start();
       game.addComponent(
         new rocket(
           this.box.toPoint(),
-          10,
-          this.mag_dir.y
+          5,
+          this.mag_dir.y,
+          this.uuid
         )
       );
+    }
   }
 }
 

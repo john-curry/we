@@ -7,6 +7,7 @@ var properties = {
   collidable: true,
   color: "black",
   priority: 1,
+  uuid: undefined,
   collide: function(e) {
     return false;
   },

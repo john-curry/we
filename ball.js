@@ -7,12 +7,13 @@ function ball(r, p, v = new point(), c = "black") {
   this.collidable = true; 
   this.acceleration = new point(0, 0);
 
-  this.onCollision = function(collided_with) {
-    //alert("you hit a ball");
+  this.onCollision = function(game, collided_with) {
+    game.components = game.components.filter(i => (i.uuid != this.uuid));
   }
 
   this.load = function(game) {
     this.image = document.getElementById("astroid");
+   this.uuid = make_uuid();
   }
 
   this.draw = function(gfx) {
