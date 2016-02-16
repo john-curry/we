@@ -2,58 +2,76 @@
     Contract: every 'offensive' object will check 
     for collisions on its own and call a collidables
     onCollision method
- =================================================
- */
+ ================================================= */
+function pointsToRay(p1, p2) {
+  var vec = p2.sub(p1);
+  var length = vec.length();
+  var d = vec.normalize();
+  return new Line();
+}
+   
+function rayToVector(ray) {
+  var ret = new point;
+  // ray = position + t * direction    
+  var d = new point(
+    myCos(ray.theta),
+    mySin(ray.theta)
+  );
+  ret.x = ray.position.x + ray.magnitude*d.x;
+  ret.y = ray.position.y + ray.magnitude*d.y;
+  return ret;
+}
 
+function vectorsToRay(begin, end) {
+
+}
 
 function collision_line_rect(line, rect, rot) {
-   var v1 = rect.toPoint().sub(line.position); 
-   var v2 = rect.toPoint().add(rect.dimensions()).sub(line.position);
+  var begin = undefined, 
+      end = undefined;
+  if (line.position.x < rect.x) {
+    begin = rect.toPoint()                     
+                .add(new point(rect.w, 0))
+                .sub(line.position)
+                
+    end =   rect.toPoint()
+                  .add(new point(0, rect.h))
+                  .sub(line.position); 
+  } else {
+    begin = rect.toPoint()
+                .sub(line.position);
 
-   //console.log("Point1: " + v1 + " point2: " + v2);
-   var angle1 = toDeg(Math.atan(v1.y/v1.x));
-   var angle2 = toDeg(Math.atan(v2.y/v2.x));
-   
-   // check which quadrant we are in
-   if (v1.x < 0 && v1.y > 0) {
-     angle1 = 180 - angle1;
-   }
-   if (v1.x < 0 && v1.y < 0) {
-     angle1 += 180;
-   }
-   if (v1.x > 0 && v1.y < 0) {
-     angle1 = 360 - angle1;
-   }
+    end = rect.toPoint()
+              .add(rect.dimensions)
+              .sub(line.position);
+  }
+                
 
-   if (v2.x < 0 && v2.y > 0) {
-     angle2 = 180 - angle2;
-   }
-   if (v2.x < 0 && v2.y < 0) {
-     angle2 += 180;
-   }
-   if (v2.x > 0 && v2.y < 0) {
-     angle2 = 360 - angle2;
-   }
+  var ray = rayToVector(line).sub(line.position);
+  
 
+  var b_unit_v = begin.normalize();
+
+  var cos_end_b_proj = end.dot(b_unit_v)/end.length();
+  var cos_lin_b_proj = ray.dot(b_unit_v)/ray.length();
    
-   
-   
-    
-   var line_rad = line.theta*Math.PI/180;
-   
-   //console.log("Angle1: " + (angle1) + " Angle2: " + (angle2) + "theta: " + line.theta);
-   if (angle1 < angle2) {
-     if (line.theta > (angle1) && line.theta < (angle2)) {
-       return true;
-     }
-     return false;
-   } else {
-     if (line.theta > angle2 && line.theta < angle1) {
-       return true;
-     }
-     return false;
-   }
-   return false;
+  var end_angle = toDeg(Math.acos(cos_end_b_proj));
+  var lin_angle = toDeg(Math.acos(cos_lin_b_proj));
+         
+ // deblog("Begin: " + begin +
+ //       " End: " + end +
+ //       " Ray: " + ray +
+ //       " Angle end: " + end_angle + 
+ //       " Angle lin: " + lin_angle + 
+ //       " interm end: " + cos_end_b_proj +
+ //       " interm lin: " +  cos_lin_b_proj
+
+ //       ); 
+         
+        
+  if (lin_angle < end_angle) return true;
+  return false;
+
 }
 
 function rot_point(p, rot) {

@@ -4,29 +4,20 @@ canvas.height = game.h;
 canvas.width  = game.w;
 var graphics = canvas.getContext("2d");
 var out =    document.getElementById("debug");
-
+game.graphics = graphics;
 var landscape = new Landscape();
 var f = new Fucus();
-var r = new rocket(new point(100, 100), 1, 200);
+//var r = new rocket(new point(100, 100), 1, 200);
 var e = new Enemy();
 
 game.player = f;
-game.addComponents([ landscape, f , r ]);
+game.addComponents([ landscape, f ]);
 game.addComponent(e);
 
 var lines = [ ];
 
-var r = new rectangle(400, 400, 200, 200);
-lines.push( new Line(1, 0, new point(0, 500)));
-lines.push( new Line(1, 0, new point(1000, 500)));
-lines.push( new Line(1, 0, new point(0, 500)));
 
-lines.push( new Line(1000, 180, new point(500, 500)));
-
-game.addComponents(lines);
-game.addComponent(r);
-
-lines.forEach(i => console.log("Intersect rectangle: " + r + " with line " + i + ": " + collision_line_rect(i, r, 0)));
+lines.forEach(i => deblog("Intersect rectangle: " + r + " with line " + i + ": " + collision_line_rect(i, r, 0)));
 
 
 

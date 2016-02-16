@@ -3,7 +3,7 @@ function Fucus() {
   this.velocity = new point(0, 0);
   this.acceleration = new point(0, 0);
   this.mag_dir = new point(0, 90);
-  this.box = new rectangle(200, 400, 75, 150);
+  this.box = new rectangle(1133, 580, 75, 150);
   this.fire_timer = undefined;
   this.fire_rate = 1000; // ms    
   this.image = undefined;
@@ -106,8 +106,42 @@ function Fucus() {
     box.x += v.x;
     box.y += v.y;
   };
-  this.ready = true;
 
+  this.update_position = function(time, game) {
+    var a = this.acceleration;
+    var v = this.velocity;
+    var box = this.box;
+    var md = this.mag_dir;
+        
+    a.x = md.x * Math.cos(md.y*Math.PI/180);
+    a.y = md.x * Math.sin(md.y*Math.PI/180);
+    
+    v.x += a.x;
+    v.y += a.y;
+
+    if (Math.sqrt(v.x*v.x + v.y*v.y) < -this.anti_thrust + this.tol) {
+      v.x = 0;
+      v.y = 0;
+    }
+
+    if (Math.sqrt(v.x*v.x + v.y*v.y) > this.max_speed) {
+      v.x = this.max_speed *Math.cos(md.y*Math.PI/180);
+      v.y = this.max_speed *Math.sin(md.y*Math.PI/180);
+    }
+
+    if (!(box.x + box.w + v.x > game.w)) {
+      if (!(box.x + v.x < 0)) {
+        box.x += v.x;
+      }
+    }  
+    if (!(box.y + box.h + v.y > game.h)) {
+      if (!(box.y + v.y < 0)) {
+        box.y += v.y;
+      }
+    }
+  };
+
+  this.ready = true;
   this.fireRocket = function(game) {
     var ft = this.fire_timer;
     if (this.ready) {
