@@ -48,6 +48,9 @@ Game.prototype = {
   clearComponents: function() {
     this.components = [ ];
   },
+  removeComponent: function(c) {
+    this.components = this.components.filter(i => i.uuid != c.uuid);
+  },
   change_state: function(s) {
     this.state = s;
     this.game_states[s].game = this;

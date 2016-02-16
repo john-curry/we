@@ -80,7 +80,7 @@ function Fucus() {
       md.x = this.anti_thrust;
     }
 
-    if (game.keysdown.some(i => i == "j")) {
+    if (game.keysdown.some(i => i == "w")) {
       game.addComponent(
         new ball(
           100,
@@ -90,7 +90,7 @@ function Fucus() {
     }
 
 
-    if (game.keysdown.some(i => i == "Enter")) {
+    if (game.keysdown.some(i => i == "q")) {
       this.fireRocket(game);
     }
     this.update_position(time, game);
