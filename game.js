@@ -1,4 +1,4 @@
-var Game = function() { };
+var Game = function(game_state) { this.game_states = game_states; };
 /* alg: turn based system
   every player character gets a timer which dictates its turn
   every time the player makes an action, the timer is depleted
@@ -15,35 +15,23 @@ Game.prototype = {
   H: function() { return h; },
   components: [ ],
   keysdown: [ ],
+  mouse_events: [ ],
+  mouse_info: new point,
+  state: "start",  
   load: function() {
-    for (var i = 0; i < this.components.length; i++) {
-      var comp = this.components[i];
-      if (comp.loadable && !comp.loaded) {
-        comp.load(game);
-        comp.loaded = true;
-      }
-    }
+    this.game_states[this.state].load(this); 
   },
 
   update: function(timestamp) {
-    for (var i = 0; i < this.components.length; i++) {
-      if (this.components[i].updatable) {
-        this.components[i].update(timestamp, game);
-      }
-    }
-    this.keysdown = [ ];
+    this.game_states[this.state].update(timestamp,this);
   },
 
   draw: function(g) {
-    g.clearRect(0, 0, this.w, this.h);
-    for (var i = 0; i < this.components.length; i++) {
-      var c = this.components[i];
-      if (c.drawable && c.visible) {
-        this.components[i].draw(g);
-      }
-    }
+    this.game_states[this.state].draw(g);
   },
-
+  refresh: function(g) {
+    g.clearRect(0, 0, this.w, this.h);
+  },
   collidables: function() {
     return this.components.filter(i => i.collidable);
   },
@@ -57,9 +45,13 @@ Game.prototype = {
     if (!c.loaded && c.loadable) c.load(game);
     this.components.push(c);  
   },
+  clearComponents: function() {
+    this.components = [ ];
+  },
   change_state: function(s) {
     this.state = s;
-    this.update = this[s];
+    this.game_states[s].game = this;
+    this.game_states[s].load(this);
   },
   player_wins: function(time, game) { },
   player_loses: function(time, game) { }

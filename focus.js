@@ -80,31 +80,20 @@ function Fucus() {
       md.x = this.anti_thrust;
     }
 
-    if (game.keysdown.some(i => i == "ArrowDown")) {
+    if (game.keysdown.some(i => i == "j")) {
+      game.addComponent(
+        new ball(
+          100,
+          box.toPoint()
+        )
+      );
     }
 
 
     if (game.keysdown.some(i => i == "Enter")) {
       this.fireRocket(game);
     }
-
-    a.x = md.x * Math.cos(md.y*Math.PI/180);
-    a.y = md.x * Math.sin(md.y*Math.PI/180);
-    v.x += a.x;
-    v.y += a.y;
-
-    if (Math.sqrt(v.x*v.x + v.y*v.y) < -this.anti_thrust + this.tol) {
-      v.x = 0;
-      v.y = 0;
-    }
-
-    if (Math.sqrt(v.x*v.x + v.y*v.y) > this.max_speed) {
-      v.x = this.max_speed *Math.cos(md.y*Math.PI/180);
-      v.y = this.max_speed *Math.sin(md.y*Math.PI/180);
-    }
-
-    box.x += v.x;
-    box.y += v.y;
+    this.update_position(time, game);
   };
 
   this.update_position = function(time, game) {

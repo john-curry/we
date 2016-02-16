@@ -1,42 +1,19 @@
 var canvas = document.getElementById("canvas");
-var game = new Game();
+var game = new Game(game_states);
 canvas.height = game.h;
 canvas.width  = game.w;
 var graphics = canvas.getContext("2d");
 var out =    document.getElementById("debug");
+
 game.graphics = graphics;
-var landscape = new Landscape();
-var f = new Fucus();
-//var r = new rocket(new point(100, 100), 1, 200);
-var e = new Enemy();
+//var landscape = new Landscape();
+//var f = new Fucus();
+////var r = new rocket(new point(100, 100), 1, 200);
+//var e = new Enemy();
 
-game.player = f;
-game.addComponents([ landscape, f ]);
-game.addComponent(e);
-
-var lines = [ ];
-
-
-lines.forEach(i => deblog("Intersect rectangle: " + r + " with line " + i + ": " + collision_line_rect(i, r, 0)));
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+//game.player = f;
+//game.addComponents([ landscape, f ]);
+//game.addComponent(e);
 
 window.onload = function() {
   game.load();
@@ -61,7 +38,15 @@ document.addEventListener("keydown", function(event) {
   event.preventDefault();
 });
 
+document.onmousedown = function() { 
+  game.mouse_events.push("mousedown");
+};
+
+document.onmouseup = function() {
+  game.mouse_events = [ ];
+};
+
 document.onmousemove = function(arg) {
-  //corner.x = arg.clientX;
-  //corner.y = arg.clientY;
+  game.mouse_info.x = arg.clientX;
+  game.mouse_info.y = arg.clientY;
 };
