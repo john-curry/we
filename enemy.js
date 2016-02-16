@@ -31,11 +31,25 @@ function Enemy() {
   this.moving = function(time, game) {
     var md = this.mag_dir;
     var dt = this.dir_timer;
+    var box = this.box;
     if (this.change_dir) {
       this.change_dir = false;
       dt = new timer(this.till_dir_change, () => this.change_dir = true);
       dt.start();
-      md.y = Math.random()*359;
+      md.y = Math.random()*360;
+      
+    }
+    if (box.x < 100) {
+      md.y = Math.random()*90;
+    }
+    else if (box.y < 100) {
+      md.y = Math.random()*180;
+    }
+    if (box.y + box.w  + 100>= game.h) {
+      md.y = Math.random()*180 + 180;
+    }
+    if (box.x + box.w + 100 >= game.h) {
+      md.y = Math.random()*180 + 90;
     }
     md.x = this.max_speed; 
 
@@ -45,7 +59,6 @@ function Enemy() {
 
     if (collision_line_rect(l, f.box, 0)) {
       this.fireRocket(game);
-      
     }
     this.update_position(time, game);
   }

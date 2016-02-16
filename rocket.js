@@ -49,7 +49,7 @@ function rocket(pos, v_mag, v_dir, o) { // no acceleration for rockets
     g.translate(box.x + 0.5*box.w, box.y + 0.5*box.h);
     g.rotate((this.mag_dir.y + 90)*Math.PI/180);
     g.translate(-(box.x + .5*box.w), -(box.y + .5*box.h));
-    g.fillRect(box.x, box.y, box.w, box.h);
+    //g.fillRect(box.x, box.y, box.w, box.h);
     g.drawImage(this.image, box.x, box.y, box.w, box.h);
     g.restore();
   };
@@ -64,7 +64,13 @@ function rocket(pos, v_mag, v_dir, o) { // no acceleration for rockets
     var collidables = game.collidables();
     var hit = collidables.filter(i => this.collide(i));
     hit.forEach(i => i.onCollision(game,this));
-    if (hit.length > 0) game.removeComponent(this);
+    if (hit.length > 0) {
+      game.removeComponent(this);
+      game.addComponent(
+        new explosion(this.box.toPoint())
+      );
+    }
+
   };
 }
 
